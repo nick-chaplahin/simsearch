@@ -85,7 +85,7 @@ python simsearch.py -p </home/user/images> -t 4
 - To re-calculate similarity of images without processing, using meta-data, with different threshold:
 ```bash
 python simsearch.py -r -t 5
-```bash
+```
 To calculate and display distance between two images image 1 and image 2
 ```bash
 python simsearch.py -d </home/user/images/image1.jpg> </home/user/images/image2.tif>
