@@ -1,0 +1,78 @@
+                    GNU GENERAL PUBLIC LICENSE
+                       Version 3, 29 June 2007
+
+Copyright (C) 2024 Your Name / Your Company
+Everyone is permitted to copy and distribute verbatim copies of this
+license document, but changing it is not allowed.
+
+                            PREAMBLE
+
+This license applies to the software known as "YourProject" when used
+under the terms described herein. For commercial use by organizations
+exceeding the thresholds defined in the LICENSING.md file, a separate
+Commercial License is required.
+
+                       TERMS AND CONDITIONS
+
+0. Definitions.
+
+"This License" refers to version 3 of the GNU General Public License.
+"The Program" refers to any copyrightable work licensed under this License.
+"You" refers to the licensee.
+
+1. ELIGIBILITY FOR THIS LICENSE
+
+You may use, copy, modify, and distribute this software under the GPL v3
+terms IF you meet ONE of the following conditions:
+
+  a) You are an individual using the software for personal, non-revenue
+     generating purposes.
+
+  b) You are a non-profit organization or educational institution.
+
+  c) You are a business or organization with TOTAL ANNUAL GROSS REVENUE
+     of less than USD $1,000,000 (one million US dollars).
+
+  d) You are using the software in an open-source project that is itself
+     licensed under a GPL-compatible open-source license.
+
+If you do NOT meet any of these conditions, you MUST obtain a
+Commercial License. See LICENSE-COMMERCIAL.txt.
+
+2. SOURCE CODE
+
+The source code for this software is available at:
+https://github.com/yourname/yourproject
+
+Any modifications or derivative works distributed under this license
+must also be distributed under the GPL v3 and must include source code.
+
+3. COPYLEFT REQUIREMENT
+
+If you distribute copies or modified versions of this software, you must:
+
+  a) Include this license notice in all copies.
+  b) Make the complete source code available under the GPL v3.
+  c) Clearly mark any modifications you have made.
+
+4. NO WARRANTY
+
+THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+5. FULL GPL v3 TERMS
+
+This license incorporates by reference the full terms of the GNU General
+Public License version 3, available at:
+https://www.gnu.org/licenses/gpl-3.0.txt
+
+In the event of any conflict between the eligibility terms in Section 1
+of this license and the GPL v3, the eligibility terms in Section 1 shall
+take precedence.
+
+---
+
+For commercial licensing inquiries:
+Email:   licensing@yourcompany.com
+Website: https://yourcompany.com/licensing

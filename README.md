@@ -1,6 +1,8 @@
 # SimSearch
 
-An app to group images by similarity of their content. In this case content is set of geometric shapes and their mutual arrangement.
+An app to group images by similarity of their content. In this case content is set of geometric shapes and their mutual arrangement. No AI, no 3-rd parties, easy to adjust, easy to re-use or integrate.
+Technology is patented.
+License: Dual License.
 
 ## Description
 
@@ -15,9 +17,11 @@ Note: In case of necessity one can introduce additional coefficients, like Area 
    Similarity of images is calculated as distance between vectors of respective images: 
    Distance = Sum ( abs(V0_0 - V1_0) + abs (V0_1 - V1_1) + ... + abs(V0_31 - V1_31))
 
-Note: depending on your goals, you can use deviation Deviation =  SQRT (Sum (abs(V0_0 ^ 2 - V1_0 ^ 2) + abs(V0_1 ^ 2 - V1_1 ^ 2) + ... + abs(V0_31 ^ 2 - V1_31 ^ 2)) ), it will smooth out individual outbursts.
+Note: depending on your goals, you can use deviation: Deviation =  SQRT (Sum (abs(V0_0 ^ 2 - V1_0 ^ 2) + abs(V0_1 ^ 2 - V1_1 ^ 2) + ... + abs(V0_31 ^ 2 - V1_31 ^ 2)) ), it will smooth out individual outbursts.
 
     If Distance < threshold (or Deviation < threshold) then images are similar, otherwise - no.
+
+    App creates file imgSimMetadata.json where stores metadata of processed images, it is used for recalculation with different threshold procedure. And demonstrates reuse of metadata,  simplicity and small volume of storage.
 
 Note: technology is patented.
 
@@ -32,13 +36,13 @@ App works offline, uses no AI, needs only cv2 for reading image files.
 python -m venv venv
 source venv/bin/activate
 pip install opencv-python
-git clone 
+git clone https://github.com/nick-chaplahin/simsearch.git
 
 
-### Executing program
+### Executing
 
-* Regular run
-python simsearch.py -p <folder with images> -t <threshold>
+* Regular
+python simsearch.py -p <path to folder with images> -t <threshold>
 
 Recommended threshold 4-11.
 
@@ -89,4 +93,22 @@ nickolasthb@hotmail.com
 
 ## License
 
-This project is licensed under the Business Source License 1.1 - see the LICENSE.md file for details
+SimSearch uses a **dual licensing model**:
+
+| Who you are                            | License             | Cost   |
+|----------------------------------------|---------------------|--------|
+| Individual / non-profit / open source  | GPL v3              | Free   |
+| Small business (revenue < $5M/yr)      | GPL v3              | Free   |
+| Company with revenue ≥ $5M/yr          | Commercial License  | Paid   |
+| Closed-source / proprietary use        | Commercial License  | Paid   |
+
+**→ Not sure which license you need? Read [LICENSING.md](LICENSING.md)**
+
+**Free (GPL) License:**
+If you are eligible, you may use YourProject for free under the
+[GPL v3 License](LICENSE-GPL.txt). This requires that any software you
+distribute that incorporates YourProject must also be open source under
+a GPL-compatible license.
+
+---
+*Copyright (C) 2023 Nick Chaplahin*
