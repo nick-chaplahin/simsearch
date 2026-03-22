@@ -37,6 +37,8 @@ python -m venv venv
 source venv/bin/activate
 pip install opencv-python
 git clone https://github.com/nick-chaplahin/simsearch.git
+cd simsearch
+python simsearch.py -p Lenna_Variants_ordered -t 4 
 ```
 
 ### Executing
