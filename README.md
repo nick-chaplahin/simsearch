@@ -42,6 +42,7 @@ python simsearch.py -p Lenna_Variants_ordered -t 4
 python simsearch.py -r -t 7
 python simsearch.py -m Lenna_Variants_ordered/01_Original_TIFF.tif Lenna_Variants_ordered/06_Mirror_vertical.jpg
 ```
+Use -x option if images are big and processing takes too much time.
 
 ### Executing
 
@@ -61,20 +62,20 @@ python simsearch.py -r  -t <threshold>
 ```
 ## Help
 
-Mandatory params:
--p <path>  - Path to folder where images are located. Processed images in folder and sub folders.
- or 
--r  - Re-calculate saved metadata with new similarity threshold. No new images processing.
- or 
--d <image1> <image2> - Calculate and display distance between image vectors - number and % of lowest vector.
+* Mandatory params:
+* -p <path>  - Path to folder where images are located. Processed images in folder and sub folders.
+*  or 
+* -r  - Re-calculate saved metadata with new similarity threshold. No new images processing.
+*  or 
+* -d <image1> <image2> - Calculate and display distance between image vectors - number and % of lowest vector.
 
-Optional params:
--t <0 ... 100>  - Threshold for images similarity <0 ... 100>, default 4. 0 - only copies are similar, 100 - all are similar.
--s  - Silent, no output of similar images
--x  - Scale images before processing. Increases processing speed, reduces accuracy.
+* Optional params:
+* -t <0 ... 100>  - Threshold for images similarity <0 ... 100>, default 4. 0 - only copies are similar, 100 - all are similar.
+* -s  - Silent, no output of similar images
+* -x  - Scale images before processing. Increases processing speed, reduces accuracy.
 
 Examples:
-- To process all images in the folder and see similarity groups:
+* - To process all images in the folder and see similarity groups:
 ```bash
 python simsearch.py -p <path to folder with images>
 ```
