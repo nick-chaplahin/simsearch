@@ -39,6 +39,8 @@ pip install opencv-python
 git clone https://github.com/nick-chaplahin/simsearch.git
 cd simsearch
 python simsearch.py -p Lenna_Variants_ordered -t 4 
+python simsearch.py -r -t 7
+python simsearch.py -m Lenna_Variants_ordered/01_Original_TIFF.tif Lenna_Variants_ordered/06_Mirror_vertical.jpg
 ```
 
 ### Executing
