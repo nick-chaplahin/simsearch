@@ -62,14 +62,14 @@ python simsearch.py -r  -t <threshold>
 ```
 ## Help
 
-* Mandatory params:
+Mandatory params:
 * -p <path>  - Path to folder where images are located. Processed images in folder and sub folders.
 *  or 
 * -r  - Re-calculate saved metadata with new similarity threshold. No new images processing.
 *  or 
 * -d <image1> <image2> - Calculate and display distance between image vectors - number and % of lowest vector.
 
-* Optional params:
+Optional params:
 * -t <0 ... 100>  - Threshold for images similarity <0 ... 100>, default 4. 0 - only copies are similar, 100 - all are similar.
 * -s  - Silent, no output of similar images
 * -x  - Scale images before processing. Increases processing speed, reduces accuracy.
