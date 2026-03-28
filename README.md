@@ -25,6 +25,10 @@ App creates file imgSimMetadata.json where stores metadata of processed images, 
 
 Note: technology is patented.
 
+Code can be used for experiments, color processing procedures "f_grayscale", "f_brightlevel", "f_allbrightlevel" are added to demonstrate influence of processing sequence to results.
+
+IMPORTANT NOTE: metadata are compatible only if all images are processed using the same processing sequence! 
+
 ## Getting Started
 
 ### Dependencies
@@ -38,9 +42,12 @@ source venv/bin/activate
 pip install opencv-python
 git clone https://github.com/nick-chaplahin/simsearch.git
 cd simsearch
-python simsearch.py -p Lenna_Variants_ordered -t 4 
+python simsearch.py -p Lenna_Variants_ordered -t 4
+python simsearch.py -p Lenna_Variants_ordered -t 4 -x
+python simsearch.py -p Lenna_Variants_ordered -t 4 -P brightlevel
 python simsearch.py -r -t 7
 python simsearch.py -m Lenna_Variants_ordered/01_Original_TIFF.tif Lenna_Variants_ordered/06_Mirror_vertical.jpg
+python simsearch.py -m Lenna_Variants_ordered/01_Original_TIFF.tif Lenna_Variants_ordered/06_Mirror_vertical.jpg -P allbrightlevel
 ```
 Use -x option if images are big and processing takes too much time.
 
@@ -48,7 +55,7 @@ Use -x option if images are big and processing takes too much time.
 
 * Regular
 ```bash
-python simsearch.py -p <path to folder with images> -t <threshold>
+python simsearch.py -p <path to folder with images> -t <threshold> -P <processingprocedure>
 ```
 Recommended threshold 4-11.
 
@@ -73,11 +80,20 @@ Optional params:
 * -t <0 ... 100>  - Threshold for images similarity <0 ... 100>, default 4. 0 - only copies are similar, 100 - all are similar.
 * -s  - Silent, no output of similar images
 * -x  - Scale images before processing. Increases processing speed, reduces accuracy.
+* -P  - Color processing procedure. Values:grayscale, brightlevel, allbrightlevel. Default: grayscale
 
 Examples:
 * - To process all images in the folder and see similarity groups:
 ```bash
 python simsearch.py -p <path to folder with images>
+```
+* - To process all images in the folder if images are big and processing takes too much time:
+```bash
+python simsearch.py -p <path to folder with images> -x
+```
+* - To process all images in the folder and see similarity groups after using specific color processing procedure:
+```bash
+python simsearch.py -p <path to folder with images> -P brightlevel
 ```
 - To check processed images for similarity with another similarity threshold
 ```bash
@@ -93,7 +109,7 @@ python simsearch.py -r -t 5
 ```
 To calculate and display distance between two images image 1 and image 2
 ```bash
-python simsearch.py -d </home/user/images/image1.jpg> </home/user/images/image2.tif>
+python simsearch.py -d </home/user/images/image1.jpg> </home/user/images/image2.tif> -P allbrightlevel
 ```
 
 ## Authors

@@ -20,6 +20,26 @@ def f_grayscale(cr, cg, cb):
     return int(0.2990 * float(cr) + 0.5870 * float(cg) + 0.1140 * float(cb))
 
 
+def f_brightlevel(cr, cg, cb):
+    """
+    Procedure to calculate Grayscale mode basing on Brightness.
+    By >>3 reducing number of Figures to 32 (256/8)
+    """
+    cmin = int(min(cr, cg, cb))
+    cmax = int(max(cr, cg, cb))
+    return (cmin + cmax) // 2
+
+
+# Brightness Type of Grayscale all 3
+def f_allbrightlevel(cr, cg, cb):
+    """
+    Procedure to calculate Grayscale mode basing on Brightness.
+    Taking into consideration all 3 colors brightness levels.
+    By >>3 reducing number of Figures to 32 (256/8)
+    """
+    return (int(cr) + int(cg) + int(cb)) // 3
+
+
 def f_isneighbor(dots, i, j, bound=3):
     """
     Procedure to check if Pixel is on Outline of the Figure.
@@ -78,14 +98,11 @@ def f_loadprocessed(THRESHOLD):
     Procedure to load stored metadata from file.
     if error occurs for any reason - new, empty data strcuture is created
     """
-    tmp_set = {}
-    tmp_set["version"] = ["v0.1", THRESHOLD]
-    tmp_set["metadata"] = []
+    tmp_set = {"version": ["v0.1", THRESHOLD], "metadata": []}
     max_group = 0
     try:
         with open("imgSimMetadata.json", "r") as fp:
             tmp_set = json.load(fp)
-        metadata = tmp_set["metadata"]
         if tmp_set["version"][1] == THRESHOLD:
             for idx in range(len(tmp_set["metadata"])):
                 if tmp_set["metadata"][idx][2] > max_group:
@@ -116,6 +133,7 @@ def f_printerr():
     print("                      0 - only copies are similar, 100 - all are similar. Recommended between 1 and 5.")
     print("    -s  - Silent, no output of similar images")
     print("    -x  - Scale images before processing. Increases processing speed, reduces accuracy.")
+    print("    -P  - Color processing procedure. Values:grayscale, brightlevel, allbrightlevel. Default: grayscale")
     print("")
     print("Examples:")
     print("    To process all images in the folder and see similarity groups:")
@@ -127,7 +145,7 @@ def f_printerr():
     print("    To re-calculate similarity of images without processing, using meta-data, with different threshold:")
     print("        python imgsearch.py -r -t 5")
     print("    To calculate and display distance between two images image 1 and image 2")
-    print("        python imgsearch.py -d /home/user/images/image1.jpg /home/user/images/image2.tif")
+    print("        python imgsearch.py -d /home/user/images/image1.jpg /home/user/images/image2.tif -P atan2")
 
 
 def f_update_groups(metadata, index, group1, group2):

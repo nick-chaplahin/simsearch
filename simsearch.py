@@ -12,8 +12,7 @@ import argparse
 from common import *
 
 
-
-def f_processimg(img, xsize, ysize):
+def f_processimg(img, xsize, ysize, procedure):
     """
     Procedure to calculate actual meta-data Vector of the image.
     Image is segmented by Brightness: (max brightness = min brightness) / 2
@@ -31,7 +30,7 @@ def f_processimg(img, xsize, ysize):
             colr = img[x, y, 2]
             colg = img[x, y, 1]
             colb = img[x, y, 0]
-            line.append(f_grayscale(int(colr), int(colg), int(colb)) >> 3)
+            line.append(procedure(int(colr), int(colg), int(colb)) >> 3)
         dots.append(line)
     for x in range(1, xsize - 1):
         for y in range(1, ysize - 1):
@@ -72,7 +71,7 @@ def run_regroup(threshold):
     f_saveprocessed(set_of_vectors)
 
 
-def run_compare(imgfile1, imgfile2, scale):
+def run_compare(imgfile1, imgfile2, scale, procedure):
     """
     Procedure to build vectors and compare 2 files.
     Output is a distance between vectors in absolute number and
@@ -91,9 +90,6 @@ def run_compare(imgfile1, imgfile2, scale):
     if not imgfile1.lower().endswith(tuple(ext)) or not imgfile2.lower().endswith(tuple(ext)):
         print("ERROR:     Provided files are not image files")
     # Initial data structure to store image metadata.
-    # img_vector[1] - meta-data (list)
-    img_vector1 = []
-    img_vector2 = []
     print("Processing image {}".format(imgfile1))
     # Read image file 1 and get matrix of pixels in BRG (specifics of cv2)
     img = f_imgread(imgfile1)
@@ -104,7 +100,7 @@ def run_compare(imgfile1, imgfile2, scale):
     xsize = img.shape[0]
     ysize = img.shape[1]
     # Calculate vector of meta-data for image
-    img_vector1 = f_processimg(img, xsize, ysize)
+    img_vector1 = f_processimg(img, xsize, ysize, procedure)
     print("Processing image {}".format(imgfile2))
     # Read image file 1 and get matrix of pixels in BRG (specifics of cv2)
     img = f_imgread(imgfile2)
@@ -114,7 +110,7 @@ def run_compare(imgfile1, imgfile2, scale):
     xsize = img.shape[0]
     ysize = img.shape[1]
     # Calculate vector of meta-data for image
-    img_vector2 = f_processimg(img, xsize, ysize)
+    img_vector2 = f_processimg(img, xsize, ysize, procedure)
     print("Images processing is finished")
     print("Calculating the distance")
     distance = 0
@@ -124,7 +120,7 @@ def run_compare(imgfile1, imgfile2, scale):
     print("Distance is: absolute {},  percent {} %".format(distance, per_cent))
 
 
-def run_proc(input_path, threshold, silent, scale):
+def run_proc(input_path, threshold, silent, scale, procedure):
     """
     Procedure to build data structures, that contain images meta-data and additional data required to simplify
     images grouping by similarity.
@@ -139,9 +135,7 @@ def run_proc(input_path, threshold, silent, scale):
     ext = (".jpeg", ".jpg", ".bmp", ".png", ".tif", ".pgm", ".ppm")
 
     # Initiate empty meta-data set
-    set_of_vectors = {}
-    set_of_vectors["version"] = ["v0.1", threshold]
-    set_of_vectors["metadata"] = []
+    set_of_vectors = {"version": ["v0.1", threshold], "metadata": []}
     max_sim_group = 0
 
     # Program start
@@ -176,7 +170,7 @@ def run_proc(input_path, threshold, silent, scale):
                 img_vector[0] = os.path.join(r, name)
                 # print("Process Image Start {}".format(datetime.now()))
                 # Calculate vector of meta-data for image
-                img_vector[1] = f_processimg(img, xsize, ysize)
+                img_vector[1] = f_processimg(img, xsize, ysize, procedure)
                 # print("Process Image End {}".format(datetime.now()))
                 # Add image vector to list of vectors
                 set_of_vectors["metadata"].append(img_vector)
@@ -202,13 +196,18 @@ def run_proc(input_path, threshold, silent, scale):
     f_saveprocessed(set_of_vectors)
 
 
-def process(input_path, recalc, difference, threshold, silent, scale):
+def process(input_path, recalc, difference, threshold, silent, scale, procedure):
     """
     Procedure to process and verify input arguments.
     """
     threshold = float(threshold)
     img_file1 = ''  # Path to image for comparison
     img_file2 = ''  # path to image for comparison
+    procedures = {
+        "grayscale": f_grayscale,
+        "brightlevel": f_brightlevel,
+        "allbrightlevel": f_allbrightlevel
+    }
     PROC = "process"
     if input_path is None and not recalc and difference is None:
         print("ERROR:   Not enough arguments.")
@@ -238,11 +237,17 @@ def process(input_path, recalc, difference, threshold, silent, scale):
                 PROC = "compare"
         if input_path is not None:
             if not os.path.exists(input_path):
-                print("ERROR:   Path is pointing to not existing location")
+                print(f"ERROR:   Path {input_path} is pointing to not existing location")
                 f_printerr()
                 sys.exit(2)
         if recalc:
             PROC = "recalc"
+        if procedure not in procedures.keys():
+            print(f"ERROR:   Unknown Color processing procedure {procedure}")
+            f_printerr()
+            sys.exit(2)
+        else:
+            procedure = procedures[procedure]
 
     except:
         print("ERROR:    Error occurs")
@@ -252,9 +257,9 @@ def process(input_path, recalc, difference, threshold, silent, scale):
     if PROC == "recalc":
         run_regroup(threshold)
     elif PROC == "compare":
-        run_compare(img_file1, img_file2, scale)
+        run_compare(img_file1, img_file2, scale, procedure)
     else:
-        run_proc(input_path, threshold, silent, scale)
+        run_proc(input_path, threshold, silent, scale, procedure)
 
 
 if __name__ == "__main__":
@@ -270,6 +275,6 @@ if __name__ == "__main__":
                         help="Silent, no output of similar images")
     parser.add_argument("--scale", "-x", action='store_true',
                         help="Scale images before processing. Increases processing speed, reduces accuracy.")
+    parser.add_argument("--procedure", "-P", default="grayscale", help="Color processing procedure (grayscale, brightlevel, allbrightlevel), default: grayscale")
     args = parser.parse_args()
-    process(args.path, args.recalc, args.difference, args.threshold, args.silent, args.scale)
-
+    process(args.path, args.recalc, args.difference, args.threshold, args.silent, args.scale, args.procedure)
